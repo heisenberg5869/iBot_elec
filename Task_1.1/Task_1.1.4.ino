@@ -1,19 +1,20 @@
-int InputPin = 10;
-int OutputPin = 9;
+int trig = 10;
+int echo = 9;
 void setup() {
   Serial.begin(9600);
-  pinMode(InputPin, OUTPUT);
-  pinMode(OutputPin, INPUT);
+  pinMode(trig, OUTPUT);
+  pinMode(echo, INPUT);
 }
 
 void loop() {
-  digitalWrite(OutputPin, LOW);
+  digitalWrite(trig, LOW);
   delayMicroseconds(2);
-  digitalWrite(OutputPin, HIGH);
+  digitalWrite(trig, HIGH);
   delayMicroseconds(10);
-  digitalWrite(OutputPin, LOW);
+  digitalWrite(trig, LOW);
+  delayMicroseconds(2);
   
-  long duration = pulseIn(InputPin, HIGH);
+  long duration = pulseIn(echo, HIGH);
   float distance = duration * (0.0343 / 2);
   
   Serial.print(distance);

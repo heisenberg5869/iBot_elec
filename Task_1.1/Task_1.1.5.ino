@@ -1,5 +1,6 @@
-const int soundPin = 2;     
-const int ledPin = 13;     
+const int soundPin = A0;     
+const int ledPin = 13;  
+const int threshold = 100;   
 
 void setup() {
   pinMode(soundPin, INPUT); 
@@ -8,12 +9,12 @@ void setup() {
 }
 
 void loop() {
-  int sensorValue = digitalRead(soundPin);
+  int sensorValue = analogRead(soundPin);
 
-  if (sensorValue == HIGH) {
+  if (sensorValue >= threshold) {
     Serial.println("Clap Detected!");
     digitalWrite(ledPin, HIGH); 
-    delay(2000);                
+    delay(1000);                
     digitalWrite(ledPin, LOW);  
   }
 }

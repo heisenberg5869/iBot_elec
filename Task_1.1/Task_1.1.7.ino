@@ -1,23 +1,42 @@
-#include <DHT11.h>
 
-DHT11 dht11(2);
+#include <Adafruit_Sensor.h>
+#include <DHT.h>
+#include <DHT_U.h>
+
+#define DHTPIN 2 
+#define DHTTYPE    DHT11     
+
+DHT dht(DHTPIN, DHTTYPE);
+
+uint32_t delayMS;
 
 void setup() {
-    Serial.begin(9600);
-    dht11.setDelay(2000); 
+  Serial.begin(9600);
+  dht.begin();
+  delayMS =1000;
 }
 
 void loop() {
-    int temperature = 0;
-    int humidity = 0;
-    int result = dht11.readTemperatureHumidity(temperature, humidity);
-    if (result == 0) {
-        Serial.print("Temperature: ");
-        Serial.print(temperature);
-        Serial.print(" °C\tHumidity: ");
-        Serial.print(humidity);
-        Serial.println(" %");
-    } else {
-        Serial.println(DHT11::getErrorString(result));
-    }
+  delay(delayMS);
+  float h = dht.readHumidity();
+  float t = dht.readTemperature();
+
+
+  if (isnan(t)) {
+    Serial.println(F("Error reading temperature!"));
+  }
+  else {
+    Serial.print(F("Temperature: "));
+    Serial.print(t);
+    Serial.println(F("°C"));
+  }
+  
+  if (isnan(h)) {
+    Serial.println(F("Error reading humidity!"));
+  }
+  else {
+    Serial.print(F("Humidity: "));
+    Serial.print(h);
+    Serial.println(F("%"));
+  }
 }
