@@ -1,19 +1,18 @@
-#include <Servo.h>
+#include <LiquidCrystal.h>
 
-Servo servo;
+// RS, EN, D4, D5, D6, D7
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+int backlightPin =9;
 
 void setup() {
-  servo.attach(9);   
+  pinMode(backlightPin, OUTPUT);
+  lcd.begin(16, 2);
 }
 
 void loop() {
-  for (int angle = 0; angle <= 180; angle++) {
-    servo.write(angle);
-    delay(15);         
-  }
-
-  for (int angle = 180; angle >= 0; angle--) {
-    servo.write(angle);
-    delay(15);
-  }
+  analogWrite(backlightPin, 100);
+  lcd.setCursor(0, 0);
+  lcd.print("Hello world");
+  lcd.setCursor(0, 1);
+  lcd.print("Sarrveshwar T");
 }
